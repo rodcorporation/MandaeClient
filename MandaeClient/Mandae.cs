@@ -3,7 +3,9 @@ using MandaeClient.CalcularFrete;
 using MandaeClient.ConsuiltarTracking;
 using Newtonsoft.Json;
 using System;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 
 namespace MandaeClient
 {
@@ -20,13 +22,16 @@ namespace MandaeClient
             _environment = environment;
             _httpClient = new HttpClient
             {
-                BaseAddress = new Uri(_environment.GetUrl())
+                BaseAddress = new Uri(_environment.GetUrl()),
             };
+
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(_credential.Token);
         }
 
         public CalcularFreteResponse CalcularFrete(string cep, CalcularFreteRequest request)
         {
             var content = new StringContent(JsonConvert.SerializeObject(request));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             var response = _httpClient.PostAsync($"/v3/postalcodes/{cep}/rates", content).Result;
 
@@ -39,6 +44,7 @@ namespace MandaeClient
         public AdicionarEncomendaResponse AdicionarEncomenda(AdicionarEncomendaRequest request)
         {
             var content = new StringContent(JsonConvert.SerializeObject(request));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
 
             var response = _httpClient.PostAsync("/v2/orders/add-parcel", content).Result;
 

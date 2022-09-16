@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System.Collections.Generic;
-using static MandaeClient.AdicionarEncomenda.AdicionarEncomendaRequest;
 
 namespace MandaeClient.AdicionarEncomenda
 {
@@ -12,29 +11,11 @@ namespace MandaeClient.AdicionarEncomenda
         [JsonProperty("customerId")]
         public string IdentificadorCliente { get; set; }
 
-        [JsonProperty("sellerId")]
-        public string IdentificadorLoja { get; set; }
-
-        [JsonProperty("observation")]
-        public string Observacao { get; set; }
-
         [JsonProperty("vehicle")]
         public string Veiculo { get; set; }
 
         [JsonProperty("items")]
         public IList<Item> Items { get; set; }
-
-        [JsonProperty("trackingId")]
-        public string CodigoDeRastreio { get; set; }
-
-        [JsonProperty("totalValue")]
-        public float ValorNotaFiscal { get; set; }
-
-        [JsonProperty("platform")]
-        public string Platforma { get; set; }
-
-        [JsonProperty("inputChannel")]
-        public string CanalEntrada { get; set; }
 
         public AdicionarEncomendaResponse()
         {
@@ -43,11 +24,14 @@ namespace MandaeClient.AdicionarEncomenda
 
         public class Item
         {
+            [JsonProperty("id")]
+            public int Id { get; set; }
+
             [JsonProperty("reference")]
             public string Referencia { get; set; }
 
-            [JsonProperty("observation")]
-            public string Observacao { get; set; }
+            [JsonProperty("sender")]
+            public Remetente Remetente { get; set; }
 
             [JsonProperty("recipient")]
             public Destinatario Destinatario { get; set; }
@@ -67,19 +51,37 @@ namespace MandaeClient.AdicionarEncomenda
             [JsonProperty("trackingId")]
             public string CodigoDeRastreio { get; set; }
 
-            [JsonProperty("dimensions")]
-            public Dimensao Dimensao { get; set; }
+            [JsonProperty("plataform")]
+            public string Plataform { get; set; }
 
-            [JsonProperty("totalValue")]
-            public float ValorNotaFiscal { get; set; }
-
-            [JsonProperty("totalFreight")]
-            public float ValorFrete { get; set; }
+            [JsonProperty("inputChannel")]
+            public string CanalDeVenda { get; set; }
 
             public Item()
             {
                 ValoresItensServicos = new List<ValorItemServico>();
             }
+        }
+
+        public class Remetente
+        {
+            [JsonProperty("fullName")]
+            public string NomeCompleto { get; set; }
+
+            [JsonProperty("address")]
+            public Endereco Endereco { get; set; }
+
+            [JsonProperty("document")]
+            public string Documento { get; set; }
+
+            [JsonProperty("ie")]
+            public string InscricaoEstadual { get; set; }
+
+            [JsonProperty("email")]
+            public string Email { get; set; }
+
+            [JsonProperty("phone")]
+            public string Telefone { get; set; }
         }
 
         public class Destinatario
@@ -125,12 +127,16 @@ namespace MandaeClient.AdicionarEncomenda
 
             [JsonProperty("country")]
             public string Pais { get; set; }
+
+            [JsonProperty("reference")]
+            public string Reference { get; set; }
         }
 
         public class ValorItemServico
         {
             [JsonProperty("name")]
             public string Name { get; set; }
+
             [JsonProperty("value")]
             public float Value { get; set; }
         }
