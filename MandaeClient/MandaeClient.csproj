@@ -52,8 +52,10 @@
     <Compile Include="Credential.cs" />
     <Compile Include="EnvironmentProduction.cs" />
     <Compile Include="EnvironmentSandbox.cs" />
+    <Compile Include="ApiResponse.cs" />
     <Compile Include="IEnvironment.cs" />
     <Compile Include="Mandae.cs" />
+    <Compile Include="ErrorResponse.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
